@@ -85,6 +85,7 @@ export const Keyboard = ({
           Enter
         </Key>
         <Key value="و" onClick={onClick} status={charStatuses['و']} />
+        <Key value="ئ" onClick={onClick} status={charStatuses['ئ']} />
         <Key value="د" onClick={onClick} status={charStatuses['د']} />
         <Key value="ذ" onClick={onClick} status={charStatuses['ذ']} />
         <Key value="ر" onClick={onClick} status={charStatuses['ر']} />

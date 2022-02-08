@@ -23,7 +23,7 @@ export const Key = ({
   const keyDelayMs = REVEAL_TIME_MS * MAX_WORD_LENGTH
 
   const classes = classnames(
-    'flex items-center justify-center rounded mx-0.5 text-xs font-bold cursor-pointer select-none dark:text-white',
+    'flex items-center justify-center rounded mx-0.5 text-sm font-bold cursor-pointer select-none dark:text-white',
     {
       'transition ease-in-out': isRevealing,
       'bg-slate-200 dark:bg-slate-600 hover:bg-slate-300 active:bg-slate-400':
