@@ -1,7 +1,7 @@
 import { getStatuses } from '../../lib/statuses'
 import { Key } from './Key'
 import { useEffect } from 'react'
-import { ENTER_TEXT, DELETE_TEXT } from '../../constants/strings'
+// import { ENTER_TEXT, DELETE_TEXT } from '../../constants/strings'
 
 type Props = {
   onChar: (value: string) => void
@@ -90,6 +90,7 @@ export const Keyboard = ({
         <Key value="ذ" onClick={onClick} status={charStatuses['ذ']} />
         <Key value="ر" onClick={onClick} status={charStatuses['ر']} />
         <Key value="ز" onClick={onClick} status={charStatuses['ز']} />
+        <Key value="ژ" onClick={onClick} status={charStatuses['ژ']} />
         <Key value="ط" onClick={onClick} status={charStatuses['ط']} />
         <Key value="ظ" onClick={onClick} status={charStatuses['ظ']} />
         <Key width={65.4} value="DELETE" onClick={onClick}>
