@@ -1,7 +1,7 @@
 {
     "name": "Persian Wordle",
     "short_name": "Persian-Wordle",
-    "description": "A fun colne of the popular wordle game, now in Farsi!",
+    "description": "A fun clone of the popular wordle game, now in Farsi!",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
@@ -17,7 +17,7 @@
     "theme_color": "#ffffff",
     "background_color": "#ffffff",
     "display": "fullscreen",
-    "start_url": "index.html",
+    "start_url": ".",
     "orientation": "portrait"
 
 }
