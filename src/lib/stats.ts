@@ -13,7 +13,8 @@ export const addStatsForCompletedGame = (
 ) => {
   // Count is number of incorrect guesses before end.
   const stats = { ...gameStats }
-
+  console.log(stats,count);
+  
   stats.totalGames += 1
 
   if (count >= MAX_CHALLENGES) {

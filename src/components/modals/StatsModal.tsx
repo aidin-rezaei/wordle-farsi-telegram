@@ -34,6 +34,8 @@ export const StatsModal = ({
   setGuesses,
   setIsGameLost,
   setIsGameWon,
+  setStats,
+  isscore,
   handleShare,
 }: any) => {
   if (gameStats.totalGames <= 0) {
@@ -57,7 +59,7 @@ export const StatsModal = ({
       isOpen={isOpen}
       handleClose={handleClose}
     >
-      <StatBar gameStats={gameStats} />
+      <StatBar gameStats={gameStats} isscore={isscore } />
       <h4 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
         {GUESS_DISTRIBUTION_TEXT}
       </h4>
@@ -85,6 +87,7 @@ export const StatsModal = ({
               handleClose()
               setIsGameLost(false)
               setIsGameWon(false)
+              setStats({ "winDistribution": [0, 0, 0, 0, 0, 0], "gamesFailed": 0, "currentStreak": 0, "bestStreak": 0, "totalGames": 0, "successRate": 0 })
               saveStatsToLocalStorage({ "winDistribution": [0, 0, 0, 0, 0, 0], "gamesFailed": 0, "currentStreak": 0, "bestStreak": 0, "totalGames": 0, "successRate": 0 })
               // {"winDistribution":[8,1,0,0,2,0],"gamesFailed":0,"currentStreak":11,"bestStreak":11,"totalGames":11,"successRate":100}
               // shareStatus(guesses, isGameLost)

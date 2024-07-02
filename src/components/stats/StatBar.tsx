@@ -8,6 +8,7 @@ import {
 
 type Props = {
   gameStats: GameStats
+  isscore?:any
 }
 
 const StatItem = ({
@@ -25,13 +26,13 @@ const StatItem = ({
   )
 }
 
-export const StatBar = ({ gameStats }: Props) => {
+export const StatBar = ({ gameStats,isscore }: Props) => {
   return (
-    <div className="flex justify-center my-2">
+    <div className="flex justify-center my-2 w-[250px]">
       <StatItem label={TOTAL_TRIES_TEXT} value={gameStats.totalGames} />
       <StatItem label={SUCCESS_RATE_TEXT} value={`${gameStats.successRate}%`} />
-      <StatItem label={CURRENT_STREAK_TEXT} value={gameStats.currentStreak} />
-      <StatItem label={BEST_STREAK_TEXT} value={gameStats.bestStreak} />
+      <StatItem label={'امتیاز'} value={isscore} />
+      {/* <StatItem label={BEST_STREAK_TEXT} value={gameStats.bestStreak} /> */}
     </div>
   )
 }

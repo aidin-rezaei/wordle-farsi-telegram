@@ -5,11 +5,10 @@ export const getStatuses = (
   guesses: string[]
 ): { [key: string]: CharStatus } => {
   const charObj: { [key: string]: CharStatus } = {}
+  let { solution } = getWordOfDayData();
   
   guesses.forEach((word) => {
-    let { solution } = getWordOfDayData();
     word.split('').forEach((letter, i) => {
-      console.log(solution,111);
       
       if (!solution.includes(letter)) {
         // make status absent

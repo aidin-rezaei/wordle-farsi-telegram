@@ -31,6 +31,7 @@ import { addStatsForCompletedGame, loadStats } from './lib/stats'
 import {
   loadGameStateFromLocalStorage,
   saveGameStateToLocalStorage,
+  saveStatsToLocalStorage,
 } from './lib/localStorage'
 
 import './App.css'
@@ -43,6 +44,7 @@ function App() {
 
   const [currentGuess, setCurrentGuess] = useState('')
   const [isGameWon, setIsGameWon] = useState(false)
+  const [isscore, setisscore] = useState(0)
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false)
   const [isNotEnoughLetters, setIsNotEnoughLetters] = useState(false)
@@ -90,10 +92,52 @@ function App() {
 
   useEffect(() => {
     saveGameStateToLocalStorage({ guesses, solution })
+    setStats({
+      winDistribution: [0, 0, 0, 0, 0, 0],
+      gamesFailed: 0,
+      currentStreak: 0,
+      bestStreak: 0,
+      totalGames: 0,
+      successRate: 0,
+    })
+    saveStatsToLocalStorage({
+      winDistribution: [0, 0, 0, 0, 0, 0],
+      gamesFailed: 0,
+      currentStreak: 0,
+      bestStreak: 0,
+      totalGames: 0,
+      successRate: 0,
+    })
   }, [guesses])
+  const calculateScore: any = (winDistribution: any) => {
+    const points = [300, 250, 150, 100, 80, 50]
+    let score = 0
 
+    const lastIndex =
+      winDistribution.length -
+      1 -
+      winDistribution
+        .slice()
+        .reverse()
+        .findIndex((value: any) => value !== 0)
+
+    if (lastIndex >= 0 && lastIndex < points.length) {
+      score = points[lastIndex]
+    }
+    winDistribution.forEach((count: any, index: any) => {
+      // score += points[index] * count;
+      if (count > 1) {
+        score -= (count - 1) * 18
+      }
+    })
+
+    return score
+  }
   useEffect(() => {
     if (isGameWon) {
+      const scores: any = calculateScore(stats.winDistribution)
+      setisscore(scores >= 0 ? isscore + scores : 0)
+      // console.log(calculateScore(stats.winDistribution));
       setTimeout(() => {
         setSuccessAlert(
           WIN_MESSAGES[Math.floor(Math.random() * WIN_MESSAGES.length)]
@@ -106,6 +150,7 @@ function App() {
       }, REVEAL_TIME_MS * MAX_WORD_LENGTH)
     }
     if (isGameLost) {
+      setisscore(0)
       setTimeout(() => {
         setIsStatsModalOpen(true)
       }, ALERT_TIME_MS)
@@ -131,6 +176,8 @@ function App() {
       return
     }
     if (!(currentGuess.length === MAX_WORD_LENGTH)) {
+      setStats(addStatsForCompletedGame(stats, guesses.length))
+
       setIsNotEnoughLetters(true)
       return setTimeout(() => {
         setIsNotEnoughLetters(false)
@@ -138,6 +185,8 @@ function App() {
     }
 
     if (!isWordInWordList(currentGuess)) {
+      setStats(addStatsForCompletedGame(stats, guesses.length))
+
       setIsWordNotFoundAlertOpen(true)
       return setTimeout(() => {
         setIsWordNotFoundAlertOpen(false)
@@ -164,6 +213,8 @@ function App() {
       if (winningWord) {
         setStats(addStatsForCompletedGame(stats, guesses.length))
         return setIsGameWon(true)
+      } else {
+        setStats(addStatsForCompletedGame(stats, guesses.length))
       }
 
       if (guesses.length === MAX_CHALLENGES - 1) {
@@ -172,7 +223,6 @@ function App() {
       }
     }
   }
-  console.log(guesses)
 
   return (
     <div className="pt-2 pb-8 max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -227,6 +277,8 @@ function App() {
         setGuesses={setGuesses}
         setIsGameWon={setIsGameWon}
         setIsGameLost={setIsGameLost}
+        setStats={setStats}
+        isscore={isscore}
         handleShare={() => {
           setSuccessAlert(GAME_COPIED_MESSAGE)
           return setTimeout(() => setSuccessAlert(''), ALERT_TIME_MS)
