@@ -26,7 +26,7 @@ import {
   ALERT_TIME_MS,
   REVEAL_TIME_MS,
 } from './constants/settings'
-import { isWordInWordList, isWinningWord, solution } from './lib/words'
+import { isWordInWordList, isWinningWord, getWordOfDayData } from './lib/words'
 import { addStatsForCompletedGame, loadStats } from './lib/stats'
 import {
   loadGameStateFromLocalStorage,
@@ -36,6 +36,7 @@ import {
 import './App.css'
 
 function App() {
+  const { solution } = getWordOfDayData()
   const prefersDarkMode = window.matchMedia(
     '(prefers-color-scheme: dark)'
   ).matches
@@ -171,6 +172,7 @@ function App() {
       }
     }
   }
+  console.log(guesses)
 
   return (
     <div className="pt-2 pb-8 max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -221,6 +223,10 @@ function App() {
         gameStats={stats}
         isGameLost={isGameLost}
         isGameWon={isGameWon}
+        setIsRevealing={setIsRevealing}
+        setGuesses={setGuesses}
+        setIsGameWon={setIsGameWon}
+        setIsGameLost={setIsGameLost}
         handleShare={() => {
           setSuccessAlert(GAME_COPIED_MESSAGE)
           return setTimeout(() => setSuccessAlert(''), ALERT_TIME_MS)

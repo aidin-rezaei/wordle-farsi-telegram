@@ -9,7 +9,9 @@ export const isWordInWordList = (word: string) => {
 }
 
 export const isWinningWord = (word: string) => {
-  return solution === word
+  console.log(wordOfDay.solution,word);
+  
+  return wordOfDay.solution === word
 }
 
 export const getWordOfDay = () => {
@@ -19,12 +21,23 @@ export const getWordOfDay = () => {
   const msInDay = 86400000
   const index = Math.floor((now - epochMs) / msInDay)
   const nextday = (index + 1) * msInDay + epochMs
-
+  const randomIndex = Math.floor(Math.random() * 233);
+  console.log(WORDS[randomIndex].toUpperCase());
+  
   return {
-    solution: WORDS[index % WORDS.length].toUpperCase(),
-    solutionIndex: index,
+    solution: WORDS[randomIndex].toUpperCase(),
+    solutionIndex: randomIndex,
     tomorrow: nextday,
   }
 }
 
-export const { solution, solutionIndex, tomorrow } = getWordOfDay()
+// export const { solution, solutionIndex, tomorrow } = getWordOfDay()
+let wordOfDay = getWordOfDay();
+
+export const getWordOfDayData = () => wordOfDay;
+
+export const setWordOfDayData = (newData?:any) => {
+    wordOfDay = { ...wordOfDay, ...newData };
+};
+
+// export { getWordOfDayData, setWordOfDayData };
